@@ -3,6 +3,8 @@
 #include <cstddef>
 #include <iostream>
 #include <ostream>
+#include <sstream>
+#include <string>
 #include <utility>
 
 using namespace std;
@@ -59,9 +61,17 @@ void sakimove(node*& head) {
 int main() {
     int data;
     node* head = nullptr;
-    while (cin >> data) {
-        append(head, data);
+    string line;
+
+    // cin不区分空格和换行，采用getline
+    if (getline(cin, line)) {
+        stringstream ss(line);
+        while (ss >> data) {
+            append(head, data);
+        }
     }
+    
+    // 移动
     sakimove(head);
     for (node* p = head; p; p = p->next) {
         cout << p->data;
