@@ -14,7 +14,7 @@ Node* createList(int M) {
     Node* head = new Node{1, nullptr};
     Node* tail = head;
     for (int i = 2; i <= M; i++) {
-        tail->next = new Node{1, nullptr};
+        tail->next = new Node{i, nullptr};
         tail = tail->next;
     }
     tail->next = head;
@@ -52,9 +52,9 @@ Node* josephusRound(Node* head, int N, int M) {
 
         // 删除原环p结点
         pre->next = p->next;
-        Node* temp = p; // 把p保存到一个临时指针中防止找不到
+        Node* temp = p; // 把p指向地址保存到一个临时指针中防止找不到
         p = p->next;    // p的新指向
-        delete temp;
+        delete temp;    // 删除结点地址
 
         count--;
     }
