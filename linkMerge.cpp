@@ -23,45 +23,63 @@ void append(Node*& head, int data) {
 
 // 合并链表
 Node* linkMerge(Node* A, Node* B) {
-    Node* result = nullptr;
+    Node* noresult = new Node{-1, nullptr};
+    Node* tail = noresult;
+    
     Node* p = A;
     Node* q = B;
 
-    while (p) {
-        while (q) {
-            if (p->data <= q->data) {
-                result = p;
-                p = p->next;
-            } else {
-                result = q;
-                q = q->next;
-            }
-            result = result->next;
+    while (p && q) {
+        int value;
+        if (p->data < q->data) {
+            value = p->data;
+            p = p->next;
+        } else if (q->data < p->data) {
+            value = q->data;
+            q = q->next;
+        } else {
+            value = p->data;
+            p = p->next;
+            q = q->next;
+        }
+
+        if (tail == noresult || tail->data != value) {
+            tail->next = new Node{value, nullptr};
+            tail = tail->next;
         }
     }
 
-    while (q) append(result, q->data);
+    while (p) {
+        if (tail->data != p->data) {
+            tail->next = new Node{p->data, nullptr};
+            tail = tail->next;
+        }
+        p = p->next;
+    }
+    while (q) {
+        if (tail->data != q->data) {
+            tail->next = new Node{q->data, nullptr};
+            tail = tail->next;
+        }
+        q = q->next;
+    }
 
-    return result;
+    return noresult->next;
 }
 
 int main() {
     string line;
-    Node* A;
-    Node* B;
+    Node* A = nullptr;
+    Node* B = nullptr;
 
     getline(cin, line);
     stringstream ss1(line);
     int data;
-    while (ss1 >> data) {
-        append(A, data);
-    }
+    while (ss1 >> data) append(A, data);
 
     getline(cin, line);
     stringstream ss2(line);
-    while (ss2 >> data) {
-        append(B, data);
-    }
+    while (ss2 >> data) append(B, data);
 
     Node* result = linkMerge(A, B);
 
