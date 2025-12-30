@@ -28,7 +28,12 @@ Node* josephusRound(Node* head, int N, int M) {
     }
 
     Node* p = head; // p为要出列的结点
-    Node* pre = nullptr;    // p的前一个结点
+    Node* pre = head;    // p的前一个结点
+    
+    while (pre->next != head) {
+        pre = pre->next;
+    }
+
     Node* newHead = nullptr;
     Node* newTail = nullptr;
 
